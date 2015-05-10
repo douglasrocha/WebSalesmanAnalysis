@@ -6,27 +6,34 @@ function clearSlate() {
     if (working) {
         speech.stop();
     }
-    document.getElementById("labnol").innerHTML = "";
-    document.getElementById("notfinal").innerHTML = "";
+    document.getElementById("labnol").value = "";
+    document.getElementById("notfinal").value = "";
     final_transcript = "";
     reset();
 }
 
 function reset() {
     working = false;
-    document.getElementById("status").style.display = "none";
-    document.getElementById("btn").innerHTML = "Start Dictation";
 }
 
-function action() {
+function actionClick() {
     if (working) {
-        speech.stop();
+        /*stopRecording(this);*/
+		stopRecording(this);
+		speech.stop();
         reset();
+		$("#btn_rec").toggleClass("btn-success");
+		$("#btn_rec").toggleClass("btn-danger");
+		document.getElementById("btn_rec").value = "Gravar";
     } else {
         speech.start();
         working = true;
-        document.getElementById("status").style.display = "block";
-        document.getElementById("btn").innerHTML = "Stop Listening";
+		final_transcript = "";
+        document.getElementById("btn_rec").value = "Parar";
+		$("#btn_rec").toggleClass("btn-success");
+		$("#btn_rec").toggleClass("btn-danger");
+		/*startRecording(this);*/
+		startRecording(this);
     }
 }
 
@@ -42,7 +49,7 @@ function toggleVisibility(selectedTab) {
 }
 
 function save() {
-    var d = document.getElementById("labnol").innerHTML;
+    var d = document.getElementById("labnol").value;
     filepicker.setKey('AeoWySYsRQWugIlof6Gegz');
     filepicker.store(d, function(a) {
         filepicker['export'](a, {
@@ -54,7 +61,7 @@ function save() {
 
 function updateLang(sel) {
     var value = sel.options[sel.selectedIndex].value;
-    speech.lang = getLang(value);
+    speech.lang = "pt-br";
     localStorage["language"] = value;
 }
 
@@ -73,7 +80,7 @@ function initialize() {
     speech.continuous = true;
     speech.maxAlternatives = 5;
     speech.interimResults = true;
-    speech.lang = getLang(localStorage["language"]);
+    speech.lang = "pt-br";
     speech.onend = reset;
 }
 
@@ -81,8 +88,7 @@ var clear, working, speech, final_transcript = "";
 
 if (typeof(webkitSpeechRecognition) !== 'function') {
 
-    document.getElementById("labnol").innerHTML = "We are sorry but Dictation requires the latest version of Google Chrome on your desktop.";
-    document.getElementById("messages").style.display = "none";
+    document.getElementById("labnol").value = "We are sorry but Dictation requires the latest version of Google Chrome on your desktop.";
 
 } else {
 
@@ -94,17 +100,15 @@ if (typeof(webkitSpeechRecognition) !== 'function') {
         localStorage["transcript"] = "";
     }
 
-    document.getElementById("labnol").innerHTML = localStorage["transcript"];
+    
     final_transcript = localStorage["transcript"];
 
     setInterval(function() {
-        var text = document.getElementById("labnol").innerHTML;
+        var text = document.getElementById("labnol").value;
         if (text !== localStorage["transcript"]) {
             localStorage["transcript"] = text;
         }
     }, 2000);
-
-    document.getElementById("lang").value = localStorage["language"];
 
     initialize();
     reset();
@@ -118,9 +122,7 @@ if (typeof(webkitSpeechRecognition) !== 'function') {
         } else if (e.error === 'not-allowed') {
             msg = "The app cannot access your microphone. Please go to chrome://settings/contentExceptions#media-stream and allow Microphone access to this website.";
         }
-        document.getElementById("warning").innerHTML = "<p>" + msg + "</p>";
         setTimeout(function() {
-            document.getElementById("warning").innerHTML = "";
         }, 5000);
     };
 
@@ -138,75 +140,12 @@ if (typeof(webkitSpeechRecognition) !== 'function') {
                 interim_transcript += " " + val;
             }
         }
-        document.getElementById("labnol").innerHTML = format(capitalize(final_transcript));
-        document.getElementById("notfinal").innerHTML = format(interim_transcript);
+		
+		document.getElementById("final_transcript").value = format(capitalize(final_transcript));
+		
+        /*document.getElementById("labnol").innerHTML = format(capitalize(final_transcript));
+        document.getElementById("notfinal").innerHTML = format(interim_transcript);*/
     };
-}
-
-function getLang(opt) {
-    var langs = [
-        ["Afrikaans", "af-za", "--", "en-us"],
-        ["Bahasa Indonesia", "id-id", "--", "id-id"],
-        ["Bahasa Melayu", "ms-my", "--", "ms-my"],
-        ["CatalÃ ", "ca-es", "--", "ca-es"],
-        ["ÄŒeÅ¡tina", "cs-cz", "--", "cs-cz"],
-        ["Deutsch", "de-de", "--", "de-de"],
-        ["Australia", "en-au", "English", "en-gb"],
-        ["Canada", "en-ca", "English", "en-us"],
-        ["India", "en-in", "English", "en-gb"],
-        ["New Zealand", "en-nz", "English", "en-gb"],
-        ["South Africa", "en-za", "English", "en-gb"],
-        ["United Kingdom", "en-gb", "English", "en-gb"],
-        ["United States", "en-us", "English", "en-us"],
-        ["Argentina", "es-ar", "EspaÃ±ol", "es-419"],
-        ["Bolivia", "es-bo", "EspaÃ±ol", "es-419"],
-        ["Chile", "es-cl", "EspaÃ±ol", "es-419"],
-        ["Colombia", "es-co", "EspaÃ±ol", "es-419"],
-        ["Costa Rica", "es-cr", "EspaÃ±ol", "es-419"],
-        ["Ecuador", "es-ec", "EspaÃ±ol", "es-419"],
-        ["El Salvador", "es-sv", "EspaÃ±ol", "es-419"],
-        ["EspaÃ±a", "es-es", "EspaÃ±ol", "es"],
-        ["Estados Unidos", "es-us", "EspaÃ±ol", "es-419"],
-        ["Guatemala", "es-gt", "EspaÃ±ol", "es-419"],
-        ["Honduras", "es-hn", "EspaÃ±ol", "es-419"],
-        ["MÃ©xico", "es-mx", "EspaÃ±ol", "es-419"],
-        ["Nicaragua", "es-ni", "EspaÃ±ol", "es-419"],
-        ["PanamÃ¡", "es-pa", "EspaÃ±ol", "es-419"],
-        ["Paraguay", "es-py", "EspaÃ±ol", "es-419"],
-        ["PerÃº", "es-pe", "EspaÃ±ol", "es-419"],
-        ["Puerto Rico", "es-pr", "EspaÃ±ol", "es-419"],
-        ["Rep. Dominicana", "es-do", "EspaÃ±ol", "es-419"],
-        ["Uruguay", "es-uy", "EspaÃ±ol", "es-419"],
-        ["Venezuela", "es-ve", "EspaÃ±ol", "es-419"],
-        ["Euskara", "eu-es", "--", "en-us"],
-        ["FranÃ§ais", "fr-fr", "--", "fr"],
-        ["Galego", "gl-es", "--", "en-us"],
-        ["IsiZulu", "zu-za", "--", "en-us"],
-        ["Ãslenska", "is-is", "--", "en-us"],
-        ["Italiano Italia", "it-it", "Italiano", "it"],
-        ["Italiano Svizzera", "it-ch", "Italiano", "it"],
-        ["Magyar", "hu-hu", "--", "hu"],
-        ["Nederlands", "nl-nl", "--", "nl"],
-        ["Polski", "pl-pl", "--", "pl"],
-        ["Brasil", "pt-br", "PortuguÃªs", "pt-br"],
-        ["Portugal", "pt-pt", "PortuguÃªs", "pt-pt"],
-        ["RomÃ¢nÄƒ", "ro-ro", "--", "ro"],
-        ["SlovenÄina", "sk-sk", "--", "sk"],
-        ["Suomi", "fi-fi", "--", "fi"],
-        ["Svenska", "sv-se", "--", "sv"],
-        ["TÃ¼rkÃ§e", "tr-tr", "--", "tr"],
-        ["Ð±ÑŠÐ»Ð³Ð°Ñ€ÑÐºÐ¸", "bg-bg", "--", "bg"],
-        ["PÑƒÑÑÐºÐ¸Ð¹", "ru-ru", "--", "ru"],
-        ["Ð¡Ñ€Ð¿ÑÐºÐ¸", "sr-rs", "--", "sr"],
-        ["í•œêµ­ì–´", "ko-kr", "--", "ko"],
-        ["æ™®é€šè¯ (ä¸­å›½å¤§é™†)", "cmn-hans-cn", "ä¸­æ–‡", "zh-cn"],
-        ["æ™®é€šè¯ (é¦™æ¸¯)", "cmn-hans-hk", "ä¸­æ–‡", "zh-cn"],
-        ["ä¸­æ–‡ (å°ç£)", "cmn-hant-tw", "ä¸­æ–‡", "zh-tw"],
-        ["ç²µèªž (é¦™æ¸¯)", "yue-hant-hk", "ä¸­æ–‡", "zh-cn"],
-        ["æ—¥æœ¬èªž", "ja-jp", "--", "ja"],
-        ["Lingua latÄ«na", "la", "--", "es-419"]
-    ];
-    return langs[opt][1];
 }
 
 (function(i, s, o, g, r, a, m) {
