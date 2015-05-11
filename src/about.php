@@ -23,12 +23,12 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#"><span>Perfani</span></a>
+                        <a class="navbar-brand" href="index.php"><span>Perfani</span></a>
                     </div>
                     <div class="collapse navbar-collapse" id="navbar-ex-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a href="#">About</a>
+                                <a href="about.php">About</a>
                             </li>
                         </ul>
                     </div>
@@ -51,7 +51,7 @@
                             empresa, podendo minimizar custos e aumentar ganhos.</p>
                         <br>
                         <br>
-                        <a class="btn btn-lg btn-default">Retornar</a>
+                        <a href="index.php" class="btn btn-lg btn-default">Retornar</a>
                     </div>
                 </div>
             </div>

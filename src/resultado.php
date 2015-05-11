@@ -1,3 +1,23 @@
+<?php
+require("lib/operacoes.php");
+
+$sex = "invalid";
+
+if (isset($_POST['sex']))
+{
+    $sex = $_POST['sex'];
+}
+
+$linha = "invalid";
+if (isset($_POST['final_transcript']))
+{
+    $linha = $_POST['final_transcript'];
+}
+
+calculateWavInformation("temp.wav");
+
+?>
+
 <!DOCTYPE html>
 <html>
     
@@ -23,12 +43,12 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#"><span>Perfani</span></a>
+                        <a href="index.php" class="navbar-brand"><span>Perfani</span></a>
                     </div>
                     <div class="collapse navbar-collapse" id="navbar-ex-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a href="#">About</a>
+                                <a href="about.php">About</a>
                             </li>
                         </ul>
                     </div>
@@ -41,10 +61,10 @@
                         <h1>Sua nota foi...
                             <br>
                         </h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisici eli.</p>
+                        <?php echo calculaNotaFinal($sex, $linha); ?>
                         <br>
                         <br>
-                        <a class="btn btn-lg btn-default">Retornar</a>
+                        <a href="index.php" class="btn btn-lg btn-default">Retornar</a>
                     </div>
                 </div>
             </div>

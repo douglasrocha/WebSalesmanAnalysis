@@ -10,6 +10,11 @@
         rel="stylesheet" type="text/css">
         <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
         rel="stylesheet" type="text/css">
+
+        <script type="text/javascript" src="js/recorderWorker.js"></script>    
+        <script type="text/javascript" src="js/recorder.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/dictation.js"></script> 
     </head>
     
     <body>
@@ -23,12 +28,12 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#"><span>Perfani</span></a>
+                        <a class="navbar-brand" href="index.php"><span>Perfani</span></a>
                     </div>
                     <div class="collapse navbar-collapse" id="navbar-ex-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a href="#">About</a>
+                                <a href="about.php">About</a>
                             </li>
                         </ul>
                     </div>
@@ -50,19 +55,23 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <form role="form" class="text-center">
+                        <form role="form" class="text-center" action="resultado.php" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <div class="radio">
                                     <label class="radio-inline">
-                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"
+                                        <input name="sex" type="radio" name="optionsRadios" id="optionsRadios1" value="male"
                                         checked="">Homem</label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"
+                                        <input name="sex" type="radio" name="optionsRadios" id="optionsRadios2" value="female"
                                         checked="">Mulher</label>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-success">Gravar</button>
-                            <button type="submit" class="btn btn-default">Próximo</button>
+                            <input type="button" id="btn_rec" name="rec" class="btn btn-success" value="Gravar" />                            
+                            <input type="hidden" id="final_transcript" name="final_transcript" />
+                            <input type="hidden" id="labnol" name="labnol" />
+                            <input type="hidden" id="lang" name="lang" />
+                            <input type="hidden" id="myfile" name="myfile" />
+                            <input type="submit" id="btn_next" name="next" value="Próximo" class="btn btn-default" />
                         </form>
                     </div>
                 </div>

@@ -148,14 +148,14 @@ function calculaNotaFinal($sex, $linha)
 	$p = calculaNotaPalavras($linha);
 	
 	$resultado = (int)((5 * $mf + 3 * $ma + 1 * $da + 5 * $p) / 14);
-	
-	$str_saida = "<table>";
+
+	$str_saida = "<center><table>";
 	$str_saida .= "<tr><td>Tom de Voz</td><td>" . $mf . "</td></tr>";
 	$str_saida .= "<tr><td>Potência da Voz</td><td>" . $ma . "</td></tr>";
 	$str_saida .= "<tr><td>Monotonia</td><td>" . $da . "</td></tr>";
 	$str_saida .= "<tr><td>Palavras Importantes</td><td>" . $p . "</td></tr>";
 	$str_saida .= "<tr><td>Total</td><td>" . $resultado . "</td></tr>";
-	$str_saida .= "</table>";
+	$str_saida .= "</table></center>";
 	
 	return $str_saida;
 }
