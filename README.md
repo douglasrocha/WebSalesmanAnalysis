@@ -14,5 +14,9 @@ Frequency Variation  | Checks whether the frequency of the voice varies. Monoton
 Power Variation      | Checks whether the power of the voice varies. Monotone voices are penalized.
 Semantic (Key Words) | The tool is able to understand which words are pronounced by the user, allowing to check whether the user is saying words that matter to the client.
 
+## Screenshots
+![Alt text](https://github.com/douglasrocha/WebSalesmanAnalysis/raw/master/doc/teste.png "Test")
+![Alt text](https://github.com/douglasrocha/WebSalesmanAnalysis/raw/master/doc/resultado.png "Results")
+
 ## Git Page
 - https://github.com/douglasrocha/WebSalesmanAnalysis
